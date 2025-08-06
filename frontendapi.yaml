@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-frontend-deployment
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: green-frontend-deployment
+  template:
+    metadata:
+      labels:
+        app: green-frontend-deployment
+    spec:
+      containers:
+      - name: green-frontend-container
+        image: 272022677495.dkr.ecr.us-east-1.amazonaws.com/bank-frontend:32
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: bank-config
+              key: REACT_APP_API_URL
+      resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+       

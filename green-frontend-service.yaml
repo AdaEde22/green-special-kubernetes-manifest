@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-banking-service
+spec:
+  selector:
+    app: green-frontend-deployment
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+
+
+#  apiVersion: v1
+#  kind: Service
+# metadata:
+#  name: frontend-banking-service
+# spec:
+#   selector:
+#     app: green-frontend-deployment
+# ports:
+     
+#     protocol: TCP
+#     port: 3000
+#     targetPort: 3000
+# type: ClusterIP

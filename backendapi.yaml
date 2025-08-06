@@ -1,0 +1,60 @@
+# Green App Backend Kubernetes Deployment
+# This file defines the Kubernetes deployment for the green backend application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-backend-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: green-backend-deployment
+  template:
+    metadata:
+      labels:
+        app: green-backend-deployment
+    spec:
+      containers:
+        - name: green-backend-container
+          image: 905767017210.dkr.ecr.us-east-1.amazonaws.com/green-backend:14
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: green-config
+                  key: DB_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: green-config
+                  key: DB_PORT
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: green-config
+                  key: DB_NAME
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: green-secret
+                  key: DB_USERNAME
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: green-secret
+                  key: DB_PASSWORD
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-backend-service
+  namespace: default
+spec:
+  selector:
+    app: green-backend-deployment
+  ports:
+    - protocol: TCP
+      port: 8080         # Port exposed within the cluster
+      targetPort: 8080   # Port your container is listening on
+  type: ClusterIP
+  # ClusterIP is the default type, which exposes the service on a cluster-internal IP.
